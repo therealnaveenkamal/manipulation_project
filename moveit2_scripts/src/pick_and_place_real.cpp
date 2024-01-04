@@ -105,7 +105,7 @@ int main(int argc, char **argv) {
   joint_group_positions_arm[2] = -1.45985;   // Elbow
   joint_group_positions_arm[3] = -1.479453;   // Wrist 1
   joint_group_positions_arm[4] = 1.549894;   // Wrist 2
-  joint_group_positions_arm[5] = -5.564759; // Wrist 3
+  joint_group_positions_arm[5] = -4.04; // Wrist 3
   move_group_arm.setJointValueTarget(joint_group_positions_arm);
   moveit::planning_interface::MoveGroupInterface::Plan my_plan;
   bool success = (move_group_arm.plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
@@ -145,6 +145,7 @@ moveit::planning_interface::MoveGroupInterface::Plan my_plan_gripper;
     std::vector<geometry_msgs::msg::Pose> approach_waypoints;
     target_pose1.position.z -= 0.06;
     target_pose1.position.y -= 0.005;
+    target_pose1.position.x += 0.03;
     approach_waypoints.push_back(target_pose1);
     moveit_msgs::msg::RobotTrajectory trajectory_approach;
     const double jump_threshold = 0.0;
@@ -162,7 +163,7 @@ moveit::planning_interface::MoveGroupInterface::Plan my_plan_gripper;
                             moveit::core::MoveItErrorCode::SUCCESS);
     move_group_gripper.execute(my_plan_gripper1);
 
-    
+  
     RCLCPP_INFO(LOGGER, "Retreat from object!");
     std::vector<geometry_msgs::msg::Pose> retreat_waypoints;
     target_pose1.position.z += 0.09;
